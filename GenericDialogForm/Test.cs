@@ -28,14 +28,19 @@ namespace GenericDialogForm
 
         private List<string> CreateDialog()
         {
-            var components = new List<Tuple<DialogEnums, List<string>>>
+            var components = new List<Tuple<DialogEnums, Tuple<string, List<string>>>>
             {
-                new Tuple<DialogEnums, List<string>>( DialogEnums.FOLDER_BROWSE, new List<string> { "Input folder", "Folder path", "Select" } ),
-                new Tuple<DialogEnums, List<string>>( DialogEnums.FOLDER_BROWSE, new List<string> { "Output folder", "Folder path", "Select" } ),
-                new Tuple<DialogEnums, List<string>>( DialogEnums.FILE_NAME, new List<string> {"File Name:", "Name of the File"} )
+                new Tuple<DialogEnums, Tuple<string, List<string>>>( DialogEnums.FOLDER_BROWSE, 
+                    new Tuple<string, List<string>>("Input Folder", new List<string> { "Input folder", "Folder path", "Select" }) ),
+                new Tuple<DialogEnums, Tuple<string, List<string>>>( DialogEnums.FOLDER_BROWSE, 
+                    new Tuple<string, List<string>>("Output Folder", new List<string> { "Output folder", "Folder path", "Select" }) ),
+                new Tuple<DialogEnums, Tuple<string, List<string>>>( DialogEnums.FILE_NAME, 
+                    new Tuple<string, List<string>>("File Name", new List<string>{"File Name:", "Name of the File"} ))
             };
 
             var genericDialogForm = new GenericDialogForm("Test form", components);
+            genericDialogForm.Components["Input Folder"].TextBoxEnabled = false;
+            genericDialogForm.ComponentsWithButton["Output Folder"].ButtonEnabled = false;
             genericDialogForm.ShowDialog();
 
             if (genericDialogForm.DialogResult == DialogResult.OK)

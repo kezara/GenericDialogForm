@@ -47,10 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DialogComponentsFileName.cs">
-		<SubType>UserControl</SubType>
-	</Compile>
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="DialogComponentsFileName.Designer.cs">
-		<DependentUpon>DialogComponentsFileName.cs</DependentUpon>
+      <DependentUpon>DialogComponentsFileName.cs</DependentUpon>
     </Compile>
     <Compile Include="DialogComponentsFolderBrowse.cs">
       <SubType>UserControl</SubType>
@@ -72,11 +72,12 @@
       <DependentUpon>GenericDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="IDialogComponents.cs" />
+    <Compile Include="IDialogComponentsWithButton.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test.cs" />
     <EmbeddedResource Include="DialogComponentsFileName.resx">
-		<DependentUpon>DialogComponentsFileName.cs</DependentUpon>
+      <DependentUpon>DialogComponentsFileName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DialogComponentsFolderBrowse.resx">
       <DependentUpon>DialogComponentsFolderBrowse.cs</DependentUpon>

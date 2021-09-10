@@ -15,20 +15,35 @@ namespace GenericDialogForm
     /// </summary>
     public partial class GenericDialogForm : Form
     {
-        private List<Tuple<DialogEnums, List<string>>> _inputDialogComponets;
+        private List<Tuple<DialogEnums, Tuple<string, List<string>>>> _inputDialogComponets;
         private int componentVerticalDistanceStep;
-        private List<IDialogComponents> _outputDialogComponents;
+        private Dictionary<string, IDialogComponentsWithButton> _componentstWithButton;
         private List<string> _dialogPaths;
+        private List<IDialogComponents> _componentsList;
+        private Dictionary<string, IDialogComponents> _components;
+
+        /// <summary>
+        /// Contains all components in dialog form
+        /// </summary>
+        public Dictionary<string, IDialogComponents> Components
+        {
+            get { return _components; }
+            set { _components = value; }
+        }
+
 
         /// <summary>
         /// containing selected paths and/or custom texts
         /// </summary>
         public List<string> DialogPaths { get; private set; }
 
-        private List<IDialogComponents> OutputDialogComponents
+        /// <summary>
+        /// contains only components which have one button
+        /// </summary>
+        public Dictionary<string, IDialogComponentsWithButton> ComponentsWithButton
         {
-            get { return _outputDialogComponents; }
-            set { _outputDialogComponents = value; }
+            get { return _componentstWithButton; }
+            set { _componentstWithButton = value; }
         }
 
         /// <summary>
@@ -47,32 +62,34 @@ namespace GenericDialogForm
         /// </summary>
         /// <param name="dialogComponents">contains: 
         /// <list type="bullet">
-        /// <item>if enum is FOLDER_BROWSE - label, textbox and button</item>
-        /// <item>if enum is FILE_NAME - label and textbox</item>
+        /// <item>if enum is FOLDER_BROWSE - tuple will contain unique name of the control, and list with strings for label, textbox and button text</item>
+        /// <item>if enum is FILE_NAME - tuple will contain unique name of the control, and list with strings for label and textbox</item>
         /// <item>List of strings in the tuple contains text for the label, textbox and button respectively if FOLDER_BROWSE</item>
         /// <item>List of strings in the tuple contains text for the label and textbox respectively if FILE_NAME</item>
         /// </list>
-        public GenericDialogForm(string formTitle, List<Tuple<DialogEnums, List<string>>> dialogComponents)
+        public GenericDialogForm(string formTitle, List<Tuple<DialogEnums, Tuple<string, List<string>>>> dialogComponents)
         {
             InitializeComponent();
             _inputDialogComponets = dialogComponents;
             componentVerticalDistanceStep = 40;
-            OutputDialogComponents = new List<IDialogComponents>();
+            Components = new Dictionary<string, IDialogComponents>();
+            ComponentsWithButton = new Dictionary<string, IDialogComponentsWithButton>();
+            _componentsList = new List<IDialogComponents>();
             Text = formTitle;
+            CreateDialogComponents();
         }
 
         private void GenericDialogForm_Load(object sender, EventArgs e)
         {
-            CreateDialogComponents();
-            var dialogComponentsCount = OutputDialogComponents.Count;
-            OutputDialogComponents[0].SetLocation(new Point(6, 10));
+            var dialogComponentsCount = Components.Count;
+            _componentsList[0].SetLocation(new Point(6, 10));
             for (int i = 0; i < dialogComponentsCount; i++)
             {
                 if (i > 0)
                 {
-                    OutputDialogComponents[i].SetLocation(new Point(6, OutputDialogComponents[i - 1].GetLocation().Y + componentVerticalDistanceStep));
+                    _componentsList[i].SetLocation(new Point(6, _componentsList[i - 1].GetLocation().Y + componentVerticalDistanceStep));
                 }
-                Controls.Add((UserControl)OutputDialogComponents[i]);
+                Controls.Add((UserControl)_componentsList[i]);
             }
 
             if (dialogComponentsCount > 1)
@@ -84,13 +101,21 @@ namespace GenericDialogForm
         private void CreateDialogComponents()
         {
             IDialogComponents component = null;
-
             foreach (var tuple in _inputDialogComponets)
             {
                 switch (tuple.Item1)
                 {
                     case DialogEnums.FOLDER_BROWSE:
                         component = new DialogComponentsFolderBrowse(tuple.Item2);
+                        try
+                        {
+                            ComponentsWithButton.Add(component.ComponentName, (IDialogComponentsWithButton)component);
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show("Dialog Form components must have unique names", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            throw;
+                        }
                         break;
                     case DialogEnums.FILE_NAME:
                         component = new DialogComponentsFileName(tuple.Item2);
@@ -98,16 +123,25 @@ namespace GenericDialogForm
                     default:
                         break;
                 }
-                OutputDialogComponents.Add(component);
+                try
+                {
+                    Components.Add(component.ComponentName, component);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Dialog Form components must have unique names", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw;
+                }
+                _componentsList.Add(component);
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             DialogPaths = new List<string>();
-            foreach (var component in OutputDialogComponents)
+            foreach (var component in Components)
             {
-                DialogPaths.Add(component.PathSelected);
+                DialogPaths.Add(component.Value.PathSelected);
             }
             this.DialogResult = DialogResult.OK;
         }

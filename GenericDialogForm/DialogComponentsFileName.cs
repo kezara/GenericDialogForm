@@ -14,6 +14,23 @@ namespace GenericDialogForm
     {
 
         private string _pathSelected;
+        private bool _textBoxEnabled;
+        private string _componentName;
+
+        public string ComponentName
+        {
+            get { return _componentName; }
+        }
+        public bool TextBoxEnabled
+        {
+            get { return _textBoxEnabled; }
+            set 
+            { 
+                _textBoxEnabled = value;
+                textBox1.Enabled = _textBoxEnabled;
+            }
+        }
+
 
         public string PathSelected
         {
@@ -25,12 +42,18 @@ namespace GenericDialogForm
                 
         }
 
-
-        public DialogComponentsFileName(List<string> text)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text">Tuple wher Item1 is name of the component
+        /// and Item2 is List of strings that represent label and texbox text</param>
+        public DialogComponentsFileName(Tuple<string, List<string>> text)
         {
             InitializeComponent();
-            label1.Text = text[0];
-            textBox1.Text = text[1];
+            Name = text.Item1;
+            _componentName = Name;
+            label1.Text = text.Item2[0];
+            textBox1.Text = text.Item2[1];
         }
 
 

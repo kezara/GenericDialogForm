@@ -25,5 +25,15 @@ namespace GenericDialogForm
         /// Selected path in dialog form
         /// </summary>
         string PathSelected { get; }
+
+        /// <summary>
+        /// exposing textBox Enabled propery
+        /// </summary>
+        bool TextBoxEnabled { get; set; }
+
+        /// <summary>
+        /// exposing a component Name property
+        /// </summary>
+        string ComponentName { get; }
     }
 }
