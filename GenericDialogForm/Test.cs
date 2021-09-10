@@ -30,8 +30,8 @@ namespace GenericDialogForm
         {
             var components = new List<Tuple<DialogEnums, Tuple<string, List<string>>>>
             {
-                new Tuple<DialogEnums, Tuple<string, List<string>>>( DialogEnums.FOLDER_BROWSE, 
-                    new Tuple<string, List<string>>("Input Folder", new List<string> { "Input folder", "Folder path", "Select" }) ),
+                new Tuple<DialogEnums, Tuple<string, List<string>>>( DialogEnums.FILE_BROWSE, 
+                    new Tuple<string, List<string>>("Input Folder", new List<string> { "Input folder", "Folder path", "Select", "csv files (*.csv)|*.csv" }) ),
                 new Tuple<DialogEnums, Tuple<string, List<string>>>( DialogEnums.FOLDER_BROWSE, 
                     new Tuple<string, List<string>>("Output Folder", new List<string> { "Output folder", "Folder path", "Select" }) ),
                 new Tuple<DialogEnums, Tuple<string, List<string>>>( DialogEnums.FILE_NAME, 

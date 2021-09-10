@@ -9,6 +9,7 @@ namespace GenericDialogForm
     public enum DialogEnums
     {
         FOLDER_BROWSE,
+        FILE_BROWSE,
         FILE_NAME
     }
 }

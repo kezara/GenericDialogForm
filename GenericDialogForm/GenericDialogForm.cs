@@ -117,6 +117,18 @@ namespace GenericDialogForm
                             throw;
                         }
                         break;
+                    case DialogEnums.FILE_BROWSE:
+                        component = new DialogComponentsFileBrowse(tuple.Item2);
+                        try
+                        {
+                            ComponentsWithButton.Add(component.ComponentName, (IDialogComponentsWithButton)component);
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show("Dialog Form components must have unique names", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            throw;
+                        }
+                        break;
                     case DialogEnums.FILE_NAME:
                         component = new DialogComponentsFileName(tuple.Item2);
                         break;

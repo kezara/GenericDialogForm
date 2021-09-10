@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DialogComponentsFileBrowse.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DialogComponentsFileBrowse.Designer.cs">
+      <DependentUpon>DialogComponentsFileBrowse.cs</DependentUpon>
+    </Compile>
     <Compile Include="DialogComponentsFileName.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -76,6 +82,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test.cs" />
+    <EmbeddedResource Include="DialogComponentsFileBrowse.resx">
+      <DependentUpon>DialogComponentsFileBrowse.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DialogComponentsFileName.resx">
       <DependentUpon>DialogComponentsFileName.cs</DependentUpon>
     </EmbeddedResource>
