@@ -40,7 +40,7 @@ namespace GenericDialogForm
 
             var genericDialogForm = new GenericDialogForm("Test form", components);
             genericDialogForm.Components["Input Folder"].TextBoxEnabled = false;
-            genericDialogForm.ComponentsWithButton["Output Folder"].ButtonEnabled = false;
+            genericDialogForm.Components["Output Folder"].TextBoxEnabled = false;
             genericDialogForm.ShowDialog();
 
             if (genericDialogForm.DialogResult == DialogResult.OK)

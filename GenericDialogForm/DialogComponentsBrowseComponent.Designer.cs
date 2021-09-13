@@ -1,7 +1,7 @@
 ﻿
 namespace GenericDialogForm
 {
-    partial class DialogComponentsFolderBrowse
+    partial class DialogComponentsBrowseComponent
     {
         /// <summary> 
         /// Required designer variable.

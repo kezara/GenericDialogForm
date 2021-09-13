@@ -10,12 +10,14 @@ using System.Windows.Forms;
 
 namespace GenericDialogForm
 {
-    public partial class DialogComponentsFolderBrowse : UserControl, IDialogComponentsWithButton
+    public partial class DialogComponentsBrowseComponent : UserControl, IDialogComponentsWithButton
     {
         private string _pathSelected;
         private bool _textBoxEnabled;
         private bool _buttonEnabled;
         private string _componentName;
+        private IDialogBrowseButton _dialogBrowseButton;
+        private string _filter;
 
         public string ComponentName
         {
@@ -61,7 +63,7 @@ namespace GenericDialogForm
         /// </summary>
         /// <param name="text">Tuple wher Item1 is name of the component
         /// and Item2 is List of strings that represent label, texbox and button text</param>
-        public DialogComponentsFolderBrowse(Tuple<string, List<string>> text)
+        public DialogComponentsBrowseComponent(Tuple<string, List<string>> text, IDialogBrowseButton dialogBrowseButton)
         {
             InitializeComponent();
             
@@ -70,19 +72,13 @@ namespace GenericDialogForm
             label1.Text = text.Item2[0];
             textBox1.Text = text.Item2[1];
             button1.Text = text.Item2[2];
+            _dialogBrowseButton = dialogBrowseButton;
+            _filter = text.Item2.Count == 4 ? text.Item2[3] : null;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var folderDialog = new FolderBrowserDialog
-            {
-                SelectedPath = textBox1.Text
-            };
-
-            if (folderDialog.ShowDialog() == DialogResult.OK)
-            {
-                textBox1.Text = folderDialog.SelectedPath;
-            }
+            textBox1.Text = _dialogBrowseButton.ButtonBrowse_Click(textBox1.Text, _filter);
         }
 
         public void SetLocation(Point location)

@@ -106,7 +106,8 @@ namespace GenericDialogForm
                 switch (tuple.Item1)
                 {
                     case DialogEnums.FOLDER_BROWSE:
-                        component = new DialogComponentsFolderBrowse(tuple.Item2);
+                        var folder = new FolderBrowse();
+                        component = new DialogComponentsBrowseComponent(tuple.Item2, folder);
                         try
                         {
                             ComponentsWithButton.Add(component.ComponentName, (IDialogComponentsWithButton)component);
@@ -118,7 +119,9 @@ namespace GenericDialogForm
                         }
                         break;
                     case DialogEnums.FILE_BROWSE:
-                        component = new DialogComponentsFileBrowse(tuple.Item2);
+                        var file = new FileBrowse();
+
+                        component = new DialogComponentsBrowseComponent(tuple.Item2, file);
                         try
                         {
                             ComponentsWithButton.Add(component.ComponentName, (IDialogComponentsWithButton)component);
